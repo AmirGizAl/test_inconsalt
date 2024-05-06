@@ -6,7 +6,7 @@ class Player < ApplicationRecord
   def self.top_players(metric_name, team_id = nil)
     metric = Metric.find_by_name!(metric_name)
 
-    players = Player.joins(:player_metrics).where(player_metrics: { metric_id: metric.id })
+    players = Player.joins(:player_metrics).where(player_metrics: { metric: })
     players = players.where(team_id:) if team_id
     players.group(:id).order('AVG(player_metrics.value) DESC').limit(5)
   end
